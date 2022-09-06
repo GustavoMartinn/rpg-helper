@@ -1,25 +1,41 @@
-import { Grid } from "@mui/material";
 import React from "react";
+import {
+  Grid,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+  TextField,
+  Autocomplete,
+  CircularProgress,
+  Button,
+  AppBar,
+  Toolbar,
+  IconButton,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CachedIcon from "@mui/icons-material/Cached";
+
 import ItemCard from "../components/ItemCard";
 import JogadorCard from "../components/JogadorCard";
 
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import CircularProgress from "@mui/material/CircularProgress";
 import { getCampanhas, getItens, getPersonagens } from "../services/querys";
 
 export default function Mestre() {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
   const [campain, setCampain] = React.useState("");
   const [itens, setItens] = React.useState([]);
   const [personagens, setPersonagens] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
+
+  React.useEffect(() => {
+    if (urlParams.get("campanha")) {
+      setCampain(urlParams.get("campanha"));
+    }
+  }, []);
 
   React.useEffect(() => {
     let active = true;
@@ -49,6 +65,15 @@ export default function Mestre() {
 
   React.useEffect(() => {
     if (campain) {
+      if (history.pushState) {
+        var newurl =
+          window.location.protocol +
+          "//" +
+          window.location.host +
+          window.location.pathname +
+          `?campanha=${campain}`;
+        window.history.pushState({ path: newurl }, "", newurl);
+      }
       (async () => {
         await getItens(campain).then((res) => {
           if (res) {
@@ -68,6 +93,32 @@ export default function Mestre() {
 
   return (
     <React.Fragment>
+      <AppBar position="fixed">
+        <Toolbar>
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Grid item>
+              <Typography variant="h6" component="div">
+                Menu do Mestre
+              </Typography>
+            </Grid>
+          </Grid>
+          <IconButton
+            sx={{ position: "absolute", right: 0 }}
+            aria-label="reload"
+            onClick={() => {
+              document.location.reload(true);
+            }}
+          >
+            <CachedIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Grid sx={{ margin: "56px" }}></Grid>
       <Grid container>
         <Autocomplete
           id="choose-campain"
@@ -83,7 +134,6 @@ export default function Mestre() {
           options={options}
           loading={loading}
           onChange={(event, newValue) => {
-            console.log(newValue);
             setCampain(newValue);
           }}
           renderInput={(params) => (
@@ -127,7 +177,7 @@ export default function Mestre() {
           </Grid>
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      <Accordion defaultExpanded={true}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"

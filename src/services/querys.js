@@ -40,6 +40,58 @@ export function getPersonagens(campanha) {
   });
 }
 
+export function getInventario(id) {
+  return new Promise((resolve, reject) => {
+    client
+      .get(`/inventario?id=${id}`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function getStatus(id) {
+  return new Promise((resolve, reject) => {
+    client
+      .get(`/status?id=${id}`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function updateStatus(id, status) {
+  return new Promise((resolve, reject) => {
+    client
+      .post(`/update_status?id=${id}&status=${status}`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function createPersonagem(nome, campanha) {
+  return new Promise((resolve, reject) => {
+    client
+      .post(`/create_personagem?nome=${nome}&campanha=${campanha}&status=[]`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
 export function addItem(idPersonagem, idItem) {
   return new Promise((resolve, reject) => {
     client
@@ -56,9 +108,7 @@ export function addItem(idPersonagem, idItem) {
 export function removeItem(idPersonagem, idItem) {
   return new Promise((resolve, reject) => {
     client
-      .delete(
-        `/personagens?/addItem?idPersonagem=${idPersonagem}&idItem=${idItem}`
-      )
+      .delete(`/removeItem?idPersonagem=${idPersonagem}&idItem=${idItem}`)
       .then((response) => {
         resolve(response.data);
       })

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const client = axios.create({
-  baseURL: "http://193.123.116.141:8000/",
+  baseURL: "https://api.pantufos.com.br/rpg",
 });
 
 export default client;

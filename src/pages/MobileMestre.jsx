@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CachedIcon from "@mui/icons-material/Cached";
-import ItemCard from "../components/ItemCard";
+import ItemCard from "../components/ItemCardMobile";
 import JogadorCard from "../components/JogadorCardMobile";
 
 import { getCampanhas, getItens, getPersonagens } from "../services/querys";

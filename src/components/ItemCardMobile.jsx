@@ -38,9 +38,9 @@ export default function ItemCard({ item, personagens }) {
       <CardHeader
         action={
           <React.Fragment>
-            <IconButton aria-label="adicionar aos favoritos">
+            {/* <IconButton aria-label="adicionar aos favoritos">
               <FavoriteIcon />
-            </IconButton>
+            </IconButton> */}
             <IconButton
               aria-label="adicione ao jogador"
               id="long-button"

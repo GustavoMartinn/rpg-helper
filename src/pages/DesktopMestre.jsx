@@ -1,5 +1,16 @@
-import { Autocomplete, CircularProgress, Grid, TextField } from "@mui/material";
 import React from "react";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Autocomplete,
+  CircularProgress,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ItemCardDesktop from "../components/ItemCardDesktop";
 import JogadorCardDesktop from "../components/JogadorCardDesktop";
 
 import { getCampanhas, getItens, getPersonagens } from "../services/querys";
@@ -9,89 +20,7 @@ export default function DesktopMestre() {
   const urlParams = new URLSearchParams(queryString);
   const [campain, setCampain] = React.useState("");
   const [itens, setItens] = React.useState([]);
-  const [personagens, setPersonagens] = React.useState([
-    {
-      status: [{ Vida: "10" }, { Sanidade: "25" }, { PE: "12" }],
-      id: 1,
-      nome: "Mestre",
-      itens: [
-        {
-          id: 1,
-          nome: "Frango frágil",
-          descricao: "Frango dahora",
-          atributos: "",
-          imagem: "https://i.imgur.com/tbamfv7.jpeg",
-          tag: "Frango",
-          inclusao: "2022-09-04 19:46:34.201183",
-        },
-        {
-          id: 2,
-          nome: "Messi careca",
-          descricao: "Messi careca kkkkkk",
-          atributos: "",
-          imagem: "https://i.imgur.com/GJkHegy.jpeg",
-          tag: "Frango",
-          inclusao: "2022-09-04 19:46:34.201183",
-        },
-      ],
-      campanha: "Frango",
-    },
-    { status: [], id: 4, nome: "Rafael", itens: [], campanha: "Frango" },
-    {
-      status: [{ Vida: "10" }, { Sanidade: "25" }, { PE: "12" }],
-      id: 1,
-      nome: "Mestre",
-      itens: [
-        {
-          id: 1,
-          nome: "Frango frágil",
-          descricao: "Frango dahora",
-          atributos: "",
-          imagem: "https://i.imgur.com/tbamfv7.jpeg",
-          tag: "Frango",
-          inclusao: "2022-09-04 19:46:34.201183",
-        },
-        {
-          id: 2,
-          nome: "Messi careca",
-          descricao: "Messi careca kkkkkk",
-          atributos: "",
-          imagem: "https://i.imgur.com/GJkHegy.jpeg",
-          tag: "Frango",
-          inclusao: "2022-09-04 19:46:34.201183",
-        },
-      ],
-      campanha: "Frango",
-    },
-    { status: [], id: 4, nome: "Rafael", itens: [], campanha: "Frango" },
-    {
-      status: [{ Vida: "10" }, { Sanidade: "25" }, { PE: "12" }],
-      id: 1,
-      nome: "Mestre",
-      itens: [
-        {
-          id: 1,
-          nome: "Frango frágil",
-          descricao: "Frango dahora",
-          atributos: "",
-          imagem: "https://i.imgur.com/tbamfv7.jpeg",
-          tag: "Frango",
-          inclusao: "2022-09-04 19:46:34.201183",
-        },
-        {
-          id: 2,
-          nome: "Messi careca",
-          descricao: "Messi careca kkkkkk",
-          atributos: "",
-          imagem: "https://i.imgur.com/GJkHegy.jpeg",
-          tag: "Frango",
-          inclusao: "2022-09-04 19:46:34.201183",
-        },
-      ],
-      campanha: "Frango",
-    },
-    { status: [], id: 4, nome: "Rafael", itens: [], campanha: "Frango" },
-  ]);
+  const [personagens, setPersonagens] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
@@ -196,19 +125,26 @@ export default function DesktopMestre() {
               )}
             />
           </Grid>
-          {itens && (
-            <Grid container item>
+          {itens.length !== 0 && (
+            <Grid container item padding={1} spacing={1}>
               {itens.map((item, index) => {
                 return (
-                  <Grid item key={`item-${index}`}>
-                    {item}
+                  <Grid item xs={12} key={`item-${index}`}>
+                    <ItemCardDesktop item={item} personagens={personagens} />
                   </Grid>
                 );
               })}
             </Grid>
           )}
         </Grid>
-        <Grid container item xs={9} padding={2} spacing={2}>
+        <Grid
+          container
+          item
+          xs={9}
+          padding={1}
+          spacing={1}
+          sx={{ marginBottom: "-28px" }}
+        >
           {personagens &&
             personagens.map((personagem, index) => {
               return (
